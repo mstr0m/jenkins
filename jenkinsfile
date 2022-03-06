@@ -39,5 +39,12 @@ pipeline {
                  publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'pmd.html', reportName: 'Scan Report', reportTitles: ''])
             }
         }
+        stage('Run in Docker') {
+            steps {
+                script{
+                    sh 'docker run -d --rm -p 8888:8080 -v target:/usr/local/tomcat/webapps tomcat:9.0'
+                }
+            }
+        }
     }
 }
