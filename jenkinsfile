@@ -42,7 +42,7 @@ pipeline {
         stage('Run in Docker') {
             steps {
                 script{
-                    sh 'sudo docker run -d --rm -p 8888:8080 -v target:/usr/local/tomcat/webapps tomcat:9.0'
+                    sh 'docker run -d --rm -p 8888:8080 -v target:/usr/local/tomcat/webapps tomcat:9.0'
                 }
             }
         }
