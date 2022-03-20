@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Get code'){
             steps {
-                 git branch: 'master', url: 'https://github.com/mstr0m/addressbook.git'
+                 git branch: 'main', url: 'https://github.com/Azure-Samples/pet-clinic-war.git'
             }
         }
         stage('Compile'){
