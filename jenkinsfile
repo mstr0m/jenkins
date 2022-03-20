@@ -39,10 +39,21 @@ pipeline {
                  publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'pmd.html', reportName: 'Scan Report', reportTitles: ''])
             }
         }
+        stage('Remove Docker container') {
+            steps {
+                script{
+                  try {
+                      sh 'docker rm -f Addressbook'
+                  } catch (Exception e) {
+                      echo 'Expected exception: ' + e.toString()
+                  }
+                }
+            }
+        }
         stage('Run in Docker') {
             steps {
                 script{
-                    sh 'docker run -d --rm -p 8888:8080 -v /var/lib/jenkins/workspace/pipeline/target:/usr/local/tomcat/webapps tomcat'
+                    sh 'docker run -d --name Addressbook -p 8888:8080 -v /var/lib/jenkins/workspace/pipeline/target:/usr/local/tomcat/webapps tomcat:9.0'
                 }
             }
         }
