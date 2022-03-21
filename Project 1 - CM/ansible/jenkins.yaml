@@ -1,0 +1,9 @@
+---
+- name: Install and setup jenkins
+  hosts: all
+  remote_user: ubuntu
+  become: yes
+
+  roles:
+  - install
+  - jenkins

@@ -1,0 +1,37 @@
+---
+- name: Add Jenkins apt Key
+  apt_key:
+    url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+    state: present
+
+- name: Add Jenkins Repository
+  apt_repository:
+    repo: deb https://pkg.jenkins.io/debian-stable binary/
+    state: present
+
+- name: Install Jenkins
+  apt:
+    name: jenkins
+    state: present
+    update_cache: yes
+
+- name: Make sure Jenkins is running
+  systemd:
+    state: started
+    name: jenkins
+
+- name: Get Jenkins initialAdminPassword
+  shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+  register: jenkins_initialAdminPassword
+
+- name: Get public ip
+  shell: curl 2ip.io
+  register: publicIP
+
+- name: OUT Jenkins URL
+  debug:
+    msg: "Jenkins URL: http://{{ publicIP.stdout }}:8080"
+
+- name: OUT Jenkins initialAdminPassword
+  debug:
+    msg: "Jenkins initialAdminPassword: {{ jenkins_initialAdminPassword.stdout }}"

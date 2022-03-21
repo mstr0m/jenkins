@@ -34,6 +34,7 @@ resource "aws_instance" "jenkins" {
   key_name                  = aws_key_pair.aws_key.key_name
   vpc_security_group_ids    = [aws_security_group.sg_jenkins.id]
 
+  # WAIT FOR SSH TO BE READY
   provisioner "remote-exec" {
     inline = ["echo 'SSH is up!'"]
     connection {
@@ -44,6 +45,7 @@ resource "aws_instance" "jenkins" {
     }
   }
 
+  # RUN ANSIBLE PLAYBOOK TO SETUP JENKINS
   provisioner "local-exec" {
     working_dir = "${path.module}/ansible/"
     command = "ansible-playbook -i ${self.public_ip}, --private-key ${var.PATH_TO_PRIVATE_KEY} jenkins.yaml"
