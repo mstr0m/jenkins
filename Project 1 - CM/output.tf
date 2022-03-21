@@ -1,3 +1,3 @@
-output "jenkins_public_ip" {
-  value = aws_instance.jenkins.*.public_ip
+output "Done!" {
+  value = "Please check last Ansible output for Jenkins URL and Jenkins initialAdminPassword"
 }
