@@ -1,0 +1,37 @@
+# THIS IS EXAMPLE
+# COPY IT TO vars.tf AND FILL WITH YOUR SECRETS
+
+# AWS
+variable "AWS_ACCESS_KEY" {
+  default = ""
+}
+variable "AWS_SECRET_KEY" {
+  default = ""
+}
+variable "AWS_TOKEN" {
+  default = ""
+}
+variable "AWS_REGION" {
+  default = "us-east-1"
+}
+# PKI
+variable "PATH_TO_PRIVATE_KEY" {
+  default = "~/.ssh/aws-rsa"
+}
+variable "PATH_TO_PUBLIC_KEY" {
+  default = "~/.ssh/aws-rsa.pub"
+}
+# SSH
+variable "SSH_USER" {
+  default = "ubuntu"
+}
+# INSTANCE
+variable "AMIS" {
+  type = map(string)
+  default = {
+    ubuntu = "ami-04505e74c0741db8d"
+  }
+}
+variable "INSTANCE_TYPE" {
+  default = "t2.micro"
+}
