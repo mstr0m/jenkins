@@ -1,27 +1,22 @@
+node {
+  checkout scm
+  
+}
+
 pipeline {
   agent any
-  tools {
-    maven 'maven'
-  }
   stages {
     stage('Get code'){
       steps {
-        git branch: 'master', url: 'https://github.com/mstr0m/addressbook.git'
+        checkout scm
       }
     }
-    stage('Compile'){
+    stage('Docker build and push image to DockerHub'){
       steps {
-        sh 'mvn compile'
-      }
-    }
-    stage('Package'){
-      steps {
-        sh 'mvn package'
-      }
-    }
-    stage('Docker build image'){
-      steps {
-        sh 'docker build -t mstr0m/jenkins_pipeline_app:$BUILD_NUMBER .'
+        docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
+          def customImage = docker.build("mstr0m/jenkins_web_app:${env.BUILD_ID}", "./Project2-JenkinsPipeline")
+          // customImage.push()
+        }
       }
     }
   //   stage('Docker build image'){
