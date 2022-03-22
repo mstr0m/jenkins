@@ -16,29 +16,6 @@ pipeline {
         }
       }
     }
-  //   stage('Docker build image'){
-  //     steps {
-  //       sh 'docker build -t jenkins_pipeline_app:$BUILD_NUMBER .'
-  //     }
-  //   }
-  //   stage('Remove Docker container') {
-  //       steps {
-  //           script{
-  //             try {
-  //                 sh 'docker rm -f Addressbook'
-  //             } catch (Exception e) {
-  //                 echo 'Expected exception: ' + e.toString()
-  //             }
-  //           }
-  //       }
-  //   }
-  //   stage('Run in Docker') {
-  //       steps {
-  //           script{
-  //               sh 'docker run -d --name Addressbook -p 8888:8080 -v /var/lib/jenkins/workspace/pipeline/target:/usr/local/tomcat/webapps tomcat:9.0'
-  //           }
-  //       }
-  //   }
   }
 // GOOD IDEA TO REMOVE OLD AND RUN NEW CONTAINER
 // # get last success build number and remove old container
