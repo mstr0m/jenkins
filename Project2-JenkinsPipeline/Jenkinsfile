@@ -40,4 +40,11 @@ pipeline {
   //       }
   //   }
   }
+// GOOD IDEA TO REMOVE OLD AND RUN NEW CONTAINER
+// # get last success build number and remove old container
+// SUCCESS_BUILD = 'wget -qO- http://jenkins_url:8080/job/jobname/lastSuccessfulBuild/buildNumber'
+// docker rm -f "${SUCCESS_BUILD}" && echo "container ${SUCCESS_BUILD} removed" || echo "container ${SUCCESS_BUILD} does not exist"
+  
+// # run new container
+// docker run -d -p 80:8080 --name "${BUILD_ID}" mstr0m/jenkins_web_app:latest
 }
