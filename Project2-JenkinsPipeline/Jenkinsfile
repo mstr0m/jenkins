@@ -21,7 +21,7 @@ pipeline {
     }
     stage('Docker build image'){
       steps {
-        sh 'docker build -t jenkins_pipeline_app:$BUILD_NUMBER .'
+        sh 'docker build -t mstr0m/jenkins_pipeline_app:$BUILD_NUMBER .'
       }
     }
   //   stage('Docker build image'){
