@@ -8,9 +8,11 @@ pipeline {
     }
     stage('Docker build and push image to DockerHub'){
       steps {
-        docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
-          def customImage = docker.build("mstr0m/jenkins_web_app:${env.BUILD_ID}", "./Project2-JenkinsPipeline")
-          // customImage.push()
+        script {
+          docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
+            def customImage = docker.build("mstr0m/jenkins_web_app:${env.BUILD_ID}", "./Project2-JenkinsPipeline")
+            // customImage.push()
+          }
         }
       }
     }
