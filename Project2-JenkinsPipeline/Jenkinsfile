@@ -29,8 +29,8 @@ pipeline {
     }
     stage('Docker run named container from DockerHub lates image'){
       steps {
-        script {
-          docker.run("mstr0m/jenkins_web_app").withRun("-d -p 80:8080 --name jenkins_web_app")
+        script{
+          docker.run("mstr0m/jenkins_web_app:${env.BUILD_ID}").withRun("-d -p 80:8080 --name jenkins_web_app")
         }
       }
     }
