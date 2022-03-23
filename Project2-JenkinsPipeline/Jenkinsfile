@@ -1,35 +1,37 @@
 pipeline {
+
   agent any
+
+  environment {
+    DOCKERHUB_TOKEN = credentials('DockerHub')
+  }
+
   stages {
     stage('Get code'){
       steps {
         checkout scm
       }
     }
-    stage('Docker build and push image to DockerHub'){
+    stage('Docker build image'){
       steps {
-        script{
-          docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
-            def customImage = docker.build("mstr0m/jenkins_web_app:${env.BUILD_ID}", "./Project2-JenkinsPipeline")
-            customImage.push()
-          }
-        }
+        sh 'docker build -t mstr0m/jenkins_web_app:latest ./Project2-JenkinsPipeline'
       }
     }
-    stage('Remove Docker container from previous build if it runs') {
+    stage('Docker push image to DockerHub'){
       steps {
-        script{
-          try {
-            sh 'docker rm -f jenkins_web_app'
-          } catch (Exception e) {
-            echo 'No container is running.' + e.toString()
-          }
-        }
+        sh 'echo $DOCKERHUB_TOKEN | docker login --username mstr0m --password-stdin'
+        sh 'docker push -t mstr0m/jenkins_web_app:latest'
+        sh 'docker logout'
       }
     }
-    stage('Docker run named container from DockerHub lates image'){
+    stage('Docker remove container from previous build if it runs') {
       steps {
-        sh 'docker run -d -p 80:8080 --name jenkins_web_app mstr0m/jenkins_web_app:$BUILD_ID'
+        sh 'docker rm -f jenkins_web_app'
+      }
+    }
+    stage('Docker run named container from DockerHub latest image'){
+      steps {
+        sh 'docker run -d -p 80:8080 --name jenkins_web_app mstr0m/jenkins_web_app:latest'
       }
     }
   }
