@@ -37,3 +37,8 @@
 
 - name: Set permissions for Jenkins user
   shell: usermod -a -G docker jenkins
+
+- name: Restart jenkins service to apply permissions changes
+  systemd:
+    state: restarted
+    name: jenkins
