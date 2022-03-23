@@ -20,7 +20,7 @@ pipeline {
     stage('Docker push image to DockerHub'){
       steps {
         sh 'echo $DOCKERHUB_TOKEN | docker login --username mstr0m --password-stdin'
-        sh 'docker push -t mstr0m/jenkins_web_app:latest'
+        sh 'docker push mstr0m/jenkins_web_app:latest'
         sh 'docker logout'
       }
     }
