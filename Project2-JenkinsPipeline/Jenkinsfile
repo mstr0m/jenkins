@@ -6,17 +6,11 @@ pipeline {
         checkout scm
       }
     }
-    stage('Docker build'){
-      steps {
-        script {
-          docker.build("mstr0m/jenkins_web_app:${env.BUILD_ID}", "./Project2-JenkinsPipeline")
-        }
-      }
-    }
-    stage('Docker push image to DockerHub'){
+    stage('Docker build and push image to DockerHub'){
       steps {
         docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
-          docker.push("mstr0m/jenkins_web_app:${env.BUILD_ID}")
+          def customImage = docker.build("mstr0m/jenkins_web_app:${env.BUILD_ID}", "./Project2-JenkinsPipeline")
+          customImage.push()
         }
       }
     }
